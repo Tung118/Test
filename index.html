@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input style="cursor: pointer" type="button" onclick="_fetch() " value="Tải dữ liệu vào bảng">
+    <table>
+        <thead>
+            <tr>
+                <th>Họ và tên</th>
+                <th>Tuổi</th>
+                <th>Số lượng/Tên-mẫu xe</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script>
+        function _fetch() {
+            fetch("text.txt")
+                .then(function (Response) {
+                    return Response.json();
+                })
+                .then(function (result) {
+                    for (var i = 0; i < result.length; i++) {
+                        var r = document.createElement("tr");
+                        var c1 = document.createElement("td");
+                        var c2 = document.createElement("td");
+                        var c3 = document.createElement("td");
+                        c1.innerHTML = result[i].name;
+                        c2.innerHTML = result[i].age;
+                        c3.innerHTML = result[i].cars.length;
+                        for (var j = 0; j < result[i].cars.length; j++)
+                            c3.innerHTML += "<br>" + result[i].cars[j].name + " - " + result[i].cars[j].models;
+                        r.appendChild(c1);
+                        r.appendChild(c2);
+                        r.appendChild(c3);
+                        console.log(r)
+                        document.querySelector("tbody").appendChild(r);
+                        document.querySelector("input").disabled = true
+                    }
+                    ;
+                })
+        }
+
+    </script>
+</body>
+
+</html>
